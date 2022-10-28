@@ -1,4 +1,4 @@
-import { Dialect, OperatorsAliases } from 'sequelize'
+import { Dialect } from 'sequelize'
 
 export interface IdbConfig {
   HOST: string
@@ -6,7 +6,6 @@ export interface IdbConfig {
   PASSWORD: string
   DB: string
   dialect: Dialect
-  operatorAliases: OperatorsAliases
   pool: {
     max: number
     min: number

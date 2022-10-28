@@ -1,12 +1,13 @@
-import express, { Application, Request, Response, NextFunction } from 'express'
-import Helper from './helper'
-import * as dotenv from 'dotenv'
 import cors from 'cors'
-import sequelize from './models/index'
+import express, { Application, Request, Response, NextFunction, Router } from 'express'
+import { Environment } from './utils'
+import { sequelize } from './config'
 
 // Boot express
-dotenv.config()
 const app: Application = express()
+const env = new Environment()
+
+export const userRouter = Router()
 
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
@@ -14,19 +15,17 @@ app.use(express.urlencoded({ extended: true }))
 sequelize
   .sync()
   .then(() => {
-    console.log('Synced db.')
+    console.log('db connected')
   })
   .catch((err) => {
-    console.log('Failed to sync db: ' + err.message)
+    console.log('db connect fail : ' + err.message)
   })
 
-const port = process.env.PORT || 8080
-const helper = new Helper('nama')
+const port = env.port || 8080
 
 // Application routing
 app.use('/', (req: Request, res: Response, next: NextFunction) => {
   res.status(200).send({ data: 'Hello World' })
-  helper.greet()
 })
 
 // Start server
