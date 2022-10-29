@@ -1,17 +1,20 @@
 import cors from 'cors'
-import express, { Application, Request, Response, NextFunction, Router } from 'express'
-import { Environment } from './utils'
+import express, { Application } from 'express'
+
 import { sequelize } from './config'
+import { Environment } from './utils'
+import UserRouter from './routes/user'
 
 // Boot express
 const app: Application = express()
-const env = new Environment()
+const port = new Environment().port
 
-export const userRouter = Router()
-
+// SetUp express
 app.use(cors())
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// Sync DB
 sequelize
   .sync()
   .then(() => {
@@ -21,12 +24,8 @@ sequelize
     console.log('db connect fail : ' + err.message)
   })
 
-const port = env.port || 8080
-
-// Application routing
-app.use('/', (req: Request, res: Response, next: NextFunction) => {
-  res.status(200).send({ data: 'Hello World' })
-})
+// Routing
+app.use(UserRouter)
 
 // Start server
 app.listen(port, () => console.log(`Server is listening on port ${port}!`))
