@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize'
+
 import { Database } from './'
 
 const config = new Database().dbConfig

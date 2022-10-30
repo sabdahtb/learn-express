@@ -3,7 +3,7 @@ import { check } from 'express-validator'
 
 import { User } from '../models/user'
 
-export class ValidationUser {
+export default class Validation {
   inRegister = [
     check('email')
       .isEmail()

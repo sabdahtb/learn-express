@@ -1,5 +1,5 @@
-import { Environment } from '../utils'
 import { IdbConfig } from '../types'
+import { Environment } from '../utils'
 
 const env = new Environment()
 

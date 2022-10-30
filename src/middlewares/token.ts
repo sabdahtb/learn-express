@@ -1,23 +1,25 @@
-import { IncomingHttpHeaders } from 'http'
 import { RequestHandler } from 'express'
-import { UserService } from '../services/user'
+import { IncomingHttpHeaders } from 'http'
+
+import { UserService } from '../services'
 
 const userService = new UserService()
 
-function getTokenFromHeaders(headers: IncomingHttpHeaders) {
-  const header = headers.authorization as string
+export default class Token {
+  getTokenFromHeaders(headers: IncomingHttpHeaders) {
+    const header = headers.authorization as string
 
-  if (!header) return header
+    if (!header) return header
 
-  return header.split(' ')[1]
-}
+    return header.split(' ')[1]
+  }
+  tokenGuard: () => RequestHandler = () => (req, res, next) => {
+    const token = this.getTokenFromHeaders(req.headers) || req.query.token || req.body.token || ''
+    const hasAccess = userService.verifyToken(token)
 
-export const tokenGuard: () => RequestHandler = () => (req, res, next) => {
-  const token = getTokenFromHeaders(req.headers) || req.query.token || req.body.token || ''
-  const hasAccess = userService.verifyToken(token)
-
-  hasAccess.then((a) => {
-    if (!a) return res.status(403).send({ message: 'No access' })
-    next()
-  })
+    hasAccess.then((a) => {
+      if (!a) return res.status(403).send({ message: 'No access' })
+      next()
+    })
+  }
 }

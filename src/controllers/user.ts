@@ -1,10 +1,11 @@
 import { matchedData, validationResult } from 'express-validator'
+
+import { UserService } from '../services'
 import { UserAddModel } from '../models/user'
-import { UserService } from '../services/user'
 
 const userService = new UserService()
 
-export class UserController {
+export default class UserController {
   inRegister(req: Request, res: any) {
     const errors = validationResult(req)
 

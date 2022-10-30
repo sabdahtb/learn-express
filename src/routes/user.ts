@@ -1,10 +1,10 @@
 import express from 'express'
 
-import { ValidationUser } from '../middlewares/validation'
-import { UserController } from '../controllers/user'
+import { Validation } from '../middlewares'
+import { UserController } from '../controllers'
 
 const app = express.Router()
-const validation = new ValidationUser()
+const validation = new Validation()
 const controller = new UserController()
 
 app.post('/user/register', validation.inRegister, controller.inRegister)

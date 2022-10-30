@@ -4,7 +4,7 @@ import Bluebird from 'bluebird'
 
 import { User, UserAddModel, UserViewModel } from '../models/user'
 
-export class UserService {
+export default class UserService {
   private readonly _saltRounds = 12
   private readonly _jwtSecret = '0.rfyj3n9nzh'
 
@@ -25,7 +25,10 @@ export class UserService {
   login({ email }: UserAddModel) {
     return User.findOne({ where: { email } }).then((u) => {
       const { id, email } = u!
-      return { token: jwt.sign({ id, email }, this._jwtSecret) }
+      return {
+        email: email,
+        token: jwt.sign({ id, email }, this._jwtSecret),
+      }
     })
   }
 
