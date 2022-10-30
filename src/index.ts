@@ -25,7 +25,7 @@ sequelize
   })
 
 // Routing
-app.use(UserRouter)
+app.use('/user', UserRouter)
 
 // Start server
 app.listen(port, () => console.log(`Server is listening on port ${port}!`))

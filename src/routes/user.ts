@@ -7,7 +7,7 @@ const app = express.Router()
 const validation = new Validation()
 const controller = new UserController()
 
-app.post('/user/register', validation.inRegister, controller.inRegister)
-app.post('/user/login', validation.inLogin, controller.inLogin)
+app.post('/register', validation.inRegister, controller.inRegister)
+app.post('/login', validation.inLogin, controller.inLogin)
 
 export default app
