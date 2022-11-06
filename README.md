@@ -32,6 +32,8 @@ If you have any feedback, please tell to my email sabdahutabarat2804@gmail.com
 ## Documentation
 
 [Express](https://expressjs.com/)
+
 [Sequelize](https://sequelize.org/)
+
 [TypeScript](https://www.typescriptlang.org/)
 
